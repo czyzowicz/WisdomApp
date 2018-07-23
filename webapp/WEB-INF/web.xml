@@ -1,0 +1,98 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>Wisdom App</display-name>
+
+    <!-- Strony powitalne -->
+    <welcome-file-list>
+        <welcome-file>/index.html</welcome-file>
+    </welcome-file-list>
+
+    <!--&lt;!&ndash;Ustawienia bezpieczeństwa &ndash;&gt;-->
+    <!--<login-config>-->
+    <!--<auth-method>DIGEST</auth-method>-->
+    <!--<realm-name>default</realm-name>-->
+    <!--</login-config>-->
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>default</realm-name>
+        <form-login-config>
+            <form-login-page>/login.html</form-login-page>
+            <form-error-page>/login_error.html</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>UserRedirection</web-resource-name>
+            <url-pattern>/user/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>UsersArea</web-resource-name>
+            <url-pattern>/users</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <!-- JSP Security -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>UsersArea</web-resource-name>
+            <url-pattern>/jsp/users.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>UsersArea</web-resource-name>
+            <url-pattern>/jsp/user-area/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <!-- Filtry -->
+    <filter>
+        <filter-name>UTFFilter</filter-name>
+        <filter-class>UTFFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>UserCredentialsFilter</filter-name>
+        <filter-class>UserCredentialsFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>UserKnowledgeFilter</filter-name>
+        <filter-class>UserKnowledgeFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UTFFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>UserCredentialsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>UserKnowledgeFilter</filter-name>
+        <url-pattern>/user/knowledge</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>UserKnowledgeFilter</filter-name>
+        <url-pattern>/user/knowledge/*</url-pattern>
+    </filter-mapping>
+
+</web-app>
